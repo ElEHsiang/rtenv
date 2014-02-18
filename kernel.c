@@ -106,6 +106,7 @@ void show_cmd_info(int argc, char *argv[]);
 void show_task_info(int argc, char *argv[]);
 void show_man_page(int argc, char *argv[]);
 void show_history(int argc, char *argv[]);
+void show_hello(int argc, char *argv[]);
 
 /* Enumeration for command types. */
 enum {
