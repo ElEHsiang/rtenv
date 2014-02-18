@@ -117,6 +117,7 @@ enum {
 	CMD_PS,
 	CMD_COUNT,
 	CMD_HELLO
+	CMD_COUNT
 } CMD_TYPE;
 /* Structure for command handler. */
 typedef struct {
@@ -132,6 +133,7 @@ const hcmd_entry cmd_data[CMD_COUNT] = {
 	[CMD_MAN] = {.cmd = "man", .func = show_man_page, .description = "Manual pager."},
 	[CMD_PS] = {.cmd = "ps", .func = show_task_info, .description = "List all the processes."},
 	[CMD_HELLO] = {.cmd = "hello", .func = show_hello, .description = "show hello world"}
+	[CMD_PS] = {.cmd = "ps", .func = show_task_info, .description = "List all the processes."}
 };
 
 /* Structure for environment variables. */
@@ -780,6 +782,7 @@ void show_hello(int argc, char *argv[])
 {
          write(fdout,"hello world",20);
 }
+
 int write_blank(int blank_num)
 {
 	char blank[] = " ";
