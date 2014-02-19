@@ -116,7 +116,7 @@ enum {
 	CMD_HISTORY,
 	CMD_MAN,
 	CMD_PS,
-	CMD_HELLO
+	CMD_HELLO,
 	CMD_COUNT
 } CMD_TYPE;
 /* Structure for command handler. */
@@ -133,7 +133,6 @@ const hcmd_entry cmd_data[CMD_COUNT] = {
 	[CMD_MAN] = {.cmd = "man", .func = show_man_page, .description = "Manual pager."},
 	[CMD_PS] = {.cmd = "ps", .func = show_task_info, .description = "List all the processes."},
 	[CMD_HELLO] = {.cmd = "hello", .func = show_hello, .description = "show hello world"}
-	[CMD_PS] = {.cmd = "ps", .func = show_task_info, .description = "List all the processes."}
 };
 
 /* Structure for environment variables. */
