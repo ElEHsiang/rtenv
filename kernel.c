@@ -93,8 +93,8 @@ void puts(char *s)
 
 #define CMD_DECL(CMD, DESCRIPTION) { \
    .cmd = #CMD, \
-   .func = cmd_ ## DESCRIPTION, \
-   .description = #DESCRIPTION \
+   .func = cmd_ ## CMD, \
+   .description = DESCRIPTION \
 } 
 
 /*Global Variables*/
