@@ -91,6 +91,12 @@ void puts(char *s)
 
 #define O_CREAT 4
 
+#define CMD_DECL(CMD, DESCRIPTION) {
+   .cmd = #CMD,
+   .func = cmd_ ## DESCRIPTION,
+   .description = #DESCRIPTION
+} 
+
 /*Global Variables*/
 char next_line[3] = {'\n','\r','\0'};
 size_t task_count = 0;
