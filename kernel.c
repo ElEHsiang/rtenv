@@ -91,10 +91,10 @@ void puts(char *s)
 
 #define O_CREAT 4
 
-#define CMD_DECL(CMD, DESCRIPTION) {
-   .cmd = #CMD,
-   .func = cmd_ ## DESCRIPTION,
-   .description = #DESCRIPTION
+#define CMD_DECL(CMD, DESCRIPTION) { \
+   .cmd = #CMD, \
+   .func = cmd_ ## DESCRIPTION, \
+   .description = #DESCRIPTION \
 } 
 
 /*Global Variables*/
