@@ -112,7 +112,7 @@ void show_cmd_info(int argc, char *argv[]);
 void show_task_info(int argc, char *argv[]);
 void show_man_page(int argc, char *argv[]);
 void show_history(int argc, char *argv[]);
-void show_hello(int argc, char *argv[]);
+void cmd_hello(int argc, char *argv[]);
 
 /* Enumeration for command types. */
 enum {
@@ -138,7 +138,8 @@ const hcmd_entry cmd_data[CMD_COUNT] = {
 	[CMD_HISTORY] = {.cmd = "history", .func = show_history, .description = "Show latest commands entered."}, 
 	[CMD_MAN] = {.cmd = "man", .func = show_man_page, .description = "Manual pager."},
 	[CMD_PS] = {.cmd = "ps", .func = show_task_info, .description = "List all the processes."},
-	[CMD_HELLO] = {.cmd = "hello", .func = show_hello, .description = "show hello world"}
+	//[CMD_HELLO] = {.cmd = "hello", .func = show_hello, .description = "show hello world"}
+	[CMD_HELLO] = CMD_DECL(hello, "show hello world")
 };
 
 /* Structure for environment variables. */
@@ -783,7 +784,7 @@ void show_history(int argc, char *argv[])
 	}
 }
 
-void show_hello(int argc, char *argv[])
+void cmd_hello(int argc, char *argv[])
 {
          write(fdout,"hello world",20);
 }
