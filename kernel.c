@@ -106,12 +106,12 @@ int fdout;
 int fdin;
 
 /* Command handlers. */
-void export_envvar(int argc, char *argv[]);
-void show_echo(int argc, char *argv[]);
-void show_cmd_info(int argc, char *argv[]);
-void show_task_info(int argc, char *argv[]);
-void show_man_page(int argc, char *argv[]);
-void show_history(int argc, char *argv[]);
+void cmd_export(int argc, char *argv[]);
+void cmd_echo(int argc, char *argv[]);
+void cmd_help(int argc, char *argv[]);
+void cmd_ps(int argc, char *argv[]);
+void cmd_man(int argc, char *argv[]);
+void cmd_history(int argc, char *argv[]);
 void cmd_hello(int argc, char *argv[]);
 
 /* Enumeration for command types. */
@@ -132,13 +132,12 @@ typedef struct {
 	char description[MAX_CMDHELP + 1];
 } hcmd_entry;
 const hcmd_entry cmd_data[CMD_COUNT] = {
-	[CMD_ECHO] = {.cmd = "echo", .func = show_echo, .description = "Show words you input."},
-	[CMD_EXPORT] = {.cmd = "export", .func = export_envvar, .description = "Export environment variables."},
-	[CMD_HELP] = {.cmd = "help", .func = show_cmd_info, .description = "List all commands you can use."},
-	[CMD_HISTORY] = {.cmd = "history", .func = show_history, .description = "Show latest commands entered."}, 
-	[CMD_MAN] = {.cmd = "man", .func = show_man_page, .description = "Manual pager."},
-	[CMD_PS] = {.cmd = "ps", .func = show_task_info, .description = "List all the processes."},
-	//[CMD_HELLO] = {.cmd = "hello", .func = show_hello, .description = "show hello world"}
+	[CMD_ECHO] = CMD_DECL(echo, "Show wards you input."),
+	[CMD_EXPORT] = CMD_DECL(export, "Export environment variables."),
+	[CMD_HELP] = CMD_DECL(help, "List all commands you can use."),
+	[CMD_HISTORY] = CMD_DECL(history, "Show latest commands entered."),
+	[CMD_MAN] = CMD_DECL(man, "Manual paper."),
+	[CMD_PS] = CMD_DECL(ps, "List all the processes."),
 	[CMD_HELLO] = CMD_DECL(hello, "show hello world")
 };
 
@@ -632,7 +631,7 @@ int fill_arg(char *const dest, const char *argv)
 }
 
 //export
-void export_envvar(int argc, char *argv[])
+void cmd_export(int argc, char *argv[])
 {
 	char *found;
 	char *value;
@@ -656,7 +655,7 @@ void export_envvar(int argc, char *argv[])
 }
 
 //ps
-void show_task_info(int argc, char* argv[])
+void cmd_ps(int argc, char* argv[])
 {
 	char ps_message[]="PID STATUS PRIORITY";
 	int ps_message_length = sizeof(ps_message);
@@ -712,7 +711,7 @@ void itoa(int n, char *dst, int base)
 
 //help
 
-void show_cmd_info(int argc, char* argv[])
+void cmd_help(int argc, char* argv[])
 {
 	const char help_desp[] = "This system has commands as follow\n\r\0";
 	int i;
@@ -727,7 +726,7 @@ void show_cmd_info(int argc, char* argv[])
 }
 
 //echo
-void show_echo(int argc, char* argv[])
+void cmd_echo(int argc, char* argv[])
 {
 	const int _n = 1; /* Flag for "-n" option. */
 	int flag = 0;
@@ -751,7 +750,7 @@ void show_echo(int argc, char* argv[])
 }
 
 //man
-void show_man_page(int argc, char *argv[])
+void cmd_man(int argc, char *argv[])
 {
 	int i;
 
@@ -772,7 +771,7 @@ void show_man_page(int argc, char *argv[])
 	write(fdout, next_line, 3);
 }
 
-void show_history(int argc, char *argv[])
+void cmd_history(int argc, char *argv[])
 {
 	int i;
 
