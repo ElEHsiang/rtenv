@@ -1148,7 +1148,7 @@ int main()
 		timeup = 0;
 
 		switch (tasks[current_task].stack->r7) {
-		case sysc_fork: /* fork */
+		case SYSC_FORK: /* fork */
 			if (task_count == TASK_LIMIT) {
 				/* Cannot create a new task, return error */
 				tasks[current_task].stack->r0 = -1;
@@ -1176,22 +1176,22 @@ int main()
 				task_count++;
 			}
 			break;
-		case sysc_getpid: /* getpid */
+		case SYSC_GETPID: /* getpid */
 			tasks[current_task].stack->r0 = current_task;
 			break;
-		case sysc_write: /* write */
+		case SYSC_WRITE: /* write */
 			_write(&tasks[current_task], tasks, task_count, pipes);
 			break;
-		case sysc_read: /* read */
+		case SYSC_READ: /* read */
 			_read(&tasks[current_task], tasks, task_count, pipes);
 			break;
-		case sysc_interrupt_wait: /* interrupt_wait */
+		case SYSC_INTERRUPT_WAIT: /* interrupt_wait */
 			/* Enable interrupt */
 			NVIC_EnableIRQ(tasks[current_task].stack->r0);
 			/* Block task waiting for interrupt to happen */
 			tasks[current_task].status = TASK_WAIT_INTR;
 			break;
-		case sysc_getpriority: /* getpriority */
+		case SYSC_GETPRIORITY: /* getpriority */
 			{
 				int who = tasks[current_task].stack->r0;
 				if (who > 0 && who < (int)task_count)
@@ -1201,7 +1201,7 @@ int main()
 				else
 					tasks[current_task].stack->r0 = -1;
 			} break;
-		case sysc_setpriority: /* setpriority */
+		case SYSC_SETPRIORITY: /* setpriority */
 			{
 				int who = tasks[current_task].stack->r0;
 				int value = tasks[current_task].stack->r1;
@@ -1216,7 +1216,7 @@ int main()
 				}
 				tasks[current_task].stack->r0 = 0;
 			} break;
-		case sysc_mknod: /* mknod */
+		case SYSC_MKNOD: /* mknod */
 			if (tasks[current_task].stack->r0 < PIPE_LIMIT)
 				tasks[current_task].stack->r0 =
 					_mknod(&pipes[tasks[current_task].stack->r0],
@@ -1224,7 +1224,7 @@ int main()
 			else
 				tasks[current_task].stack->r0 = -1;
 			break;
-		case sysc_sleep: /* sleep */
+		case SYSC_SLEEP: /* sleep */
 			if (tasks[current_task].stack->r0 != 0) {
 				tasks[current_task].stack->r0 += tick_count;
 				tasks[current_task].status = TASK_WAIT_TIME;

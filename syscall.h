@@ -1,14 +1,14 @@
 #include <stddef.h>
 
-#define sysc_fork 0x1
-#define sysc_getpid 0x2
-#define sysc_write 0x3
-#define sysc_read 0x4
-#define sysc_interrupt_wait 0x5
-#define sysc_getpriority 0x6
-#define sysc_setpriority 0x7
-#define sysc_mknod 0x8
-#define sysc_sleep 0x9
+#define SYSC_FORK 0x1
+#define SYSC_GETPID 0x2
+#define SYSC_WRITE 0x3
+#define SYSC_READ 0x4
+#define SYSC_INTERRUPT_WAIT 0x5
+#define SYSC_GETPRIORITY 0x6
+#define SYSC_SETPRIORITY 0x7
+#define SYSC_MKNOD 0x8
+#define SYSC_SLEEP 0x9
 
 void *activate(void *stack);
 
