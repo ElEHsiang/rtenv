@@ -90,12 +90,12 @@ qemuauto_remote: main.bin gdbscript
 	sleep 5
 
 qemu_autotest: main.bin test-ps.in
-	$(QEMU_STM32) -nographic -M stm32-p103 \
-	-gdb tcp:3333 -S \
-	-serial stdio \
-	-kernel main.bin -monitor null &
-	$(CROSS_COMPILE)gdb -batch -x test-ps.in
-	pkill -9 $(notdir $(QEMU_STM32))
+	$(QEMU_STM32) -M stm32-p103 \
+	-kernel main.bin 
+#	-gdb tcp::3333 -S \
+#	>/dev/null &
+#	$(CROSS_COMPILE)gdb -batch -x test-ps.in
+#	pkill -9 $(notdir $(QEMU_STM32))
 
 clean:
 	rm -f *.elf *.bin *.list

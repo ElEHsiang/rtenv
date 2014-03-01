@@ -91,7 +91,8 @@ void puts(char *s)
 
 #define O_CREAT 4
 
-#define CMD_DECL(CMD, DESCRIPTION) { \
+#define CMD_DECL(CMD, DESCRIPTION)  \
+    [ CMD_ ## CMD ] = { \
    .cmd = #CMD, \
    .func = cmd_ ## CMD, \
    .description = DESCRIPTION \
@@ -106,13 +107,13 @@ int fdout;
 int fdin;
 
 /* Command handlers. */
-void cmd_export(int argc, char *argv[]);
-void cmd_echo(int argc, char *argv[]);
-void cmd_help(int argc, char *argv[]);
-void cmd_ps(int argc, char *argv[]);
-void cmd_man(int argc, char *argv[]);
-void cmd_history(int argc, char *argv[]);
-void cmd_hello(int argc, char *argv[]);
+void cmd_EXPORT(int argc, char *argv[]);
+void cmd_ECHO(int argc, char *argv[]);
+void cmd_HELP(int argc, char *argv[]);
+void cmd_PS(int argc, char *argv[]);
+void cmd_MAN(int argc, char *argv[]);
+void cmd_HISTORY(int argc, char *argv[]);
+void cmd_HELLO(int argc, char *argv[]);
 
 /* Enumeration for command types. */
 enum {
@@ -132,13 +133,13 @@ typedef struct {
 	char description[MAX_CMDHELP + 1];
 } hcmd_entry;
 const hcmd_entry cmd_data[CMD_COUNT] = {
-	[CMD_ECHO] = CMD_DECL(echo, "Show wards you input."),
-	[CMD_EXPORT] = CMD_DECL(export, "Export environment variables."),
-	[CMD_HELP] = CMD_DECL(help, "List all commands you can use."),
-	[CMD_HISTORY] = CMD_DECL(history, "Show latest commands entered."),
-	[CMD_MAN] = CMD_DECL(man, "Manual paper."),
-	[CMD_PS] = CMD_DECL(ps, "List all the processes."),
-	[CMD_HELLO] = CMD_DECL(hello, "show hello world")
+    CMD_DECL(ECHO, "Show wards you input."),
+	CMD_DECL(EXPORT, "Export environment variables."),
+    CMD_DECL(HELP, "List all commands you can use."),
+	CMD_DECL(HISTORY, "Show latest commands entered."),
+	CMD_DECL(MAN, "Manual paper."),
+	CMD_DECL(PS, "List all the processes."),
+	CMD_DECL(HELLO, "show hello world")
 };
 
 /* Structure for environment variables. */
@@ -631,7 +632,7 @@ int fill_arg(char *const dest, const char *argv)
 }
 
 //export
-void cmd_export(int argc, char *argv[])
+void cmd_EXPORT(int argc, char *argv[])
 {
 	char *found;
 	char *value;
@@ -655,7 +656,7 @@ void cmd_export(int argc, char *argv[])
 }
 
 //ps
-void cmd_ps(int argc, char* argv[])
+void cmd_PS(int argc, char* argv[])
 {
 	char ps_message[]="PID STATUS PRIORITY";
 	int ps_message_length = sizeof(ps_message);
@@ -711,7 +712,7 @@ void itoa(int n, char *dst, int base)
 
 //help
 
-void cmd_help(int argc, char* argv[])
+void cmd_HELP(int argc, char* argv[])
 {
 	const char help_desp[] = "This system has commands as follow\n\r\0";
 	int i;
@@ -726,7 +727,7 @@ void cmd_help(int argc, char* argv[])
 }
 
 //echo
-void cmd_echo(int argc, char* argv[])
+void cmd_ECHO(int argc, char* argv[])
 {
 	const int _n = 1; /* Flag for "-n" option. */
 	int flag = 0;
@@ -750,7 +751,7 @@ void cmd_echo(int argc, char* argv[])
 }
 
 //man
-void cmd_man(int argc, char *argv[])
+void cmd_MAN(int argc, char *argv[])
 {
 	int i;
 
@@ -771,7 +772,7 @@ void cmd_man(int argc, char *argv[])
 	write(fdout, next_line, 3);
 }
 
-void cmd_history(int argc, char *argv[])
+void cmd_HISTORY(int argc, char *argv[])
 {
 	int i;
 
@@ -783,7 +784,7 @@ void cmd_history(int argc, char *argv[])
 	}
 }
 
-void cmd_hello(int argc, char *argv[])
+void cmd_HELLO(int argc, char *argv[])
 {
          write(fdout,"hello world",20);
 }
