@@ -1148,7 +1148,7 @@ int main()
 		timeup = 0;
 
 		switch (tasks[current_task].stack->r7) {
-		case 0x1: /* fork */
+		case sysc_fork: /* fork */
 			if (task_count == TASK_LIMIT) {
 				/* Cannot create a new task, return error */
 				tasks[current_task].stack->r0 = -1;
@@ -1176,22 +1176,22 @@ int main()
 				task_count++;
 			}
 			break;
-		case 0x2: /* getpid */
+		case sysc_getpid: /* getpid */
 			tasks[current_task].stack->r0 = current_task;
 			break;
-		case 0x3: /* write */
+		case sysc_write: /* write */
 			_write(&tasks[current_task], tasks, task_count, pipes);
 			break;
-		case 0x4: /* read */
+		case sysc_read: /* read */
 			_read(&tasks[current_task], tasks, task_count, pipes);
 			break;
-		case 0x5: /* interrupt_wait */
+		case sysc_interrupt_wait: /* interrupt_wait */
 			/* Enable interrupt */
 			NVIC_EnableIRQ(tasks[current_task].stack->r0);
 			/* Block task waiting for interrupt to happen */
 			tasks[current_task].status = TASK_WAIT_INTR;
 			break;
-		case 0x6: /* getpriority */
+		case sysc_getpriority: /* getpriority */
 			{
 				int who = tasks[current_task].stack->r0;
 				if (who > 0 && who < (int)task_count)
@@ -1201,7 +1201,7 @@ int main()
 				else
 					tasks[current_task].stack->r0 = -1;
 			} break;
-		case 0x7: /* setpriority */
+		case sysc_setpriority: /* setpriority */
 			{
 				int who = tasks[current_task].stack->r0;
 				int value = tasks[current_task].stack->r1;
@@ -1216,7 +1216,7 @@ int main()
 				}
 				tasks[current_task].stack->r0 = 0;
 			} break;
-		case 0x8: /* mknod */
+		case sysc_mknod: /* mknod */
 			if (tasks[current_task].stack->r0 < PIPE_LIMIT)
 				tasks[current_task].stack->r0 =
 					_mknod(&pipes[tasks[current_task].stack->r0],
@@ -1224,7 +1224,7 @@ int main()
 			else
 				tasks[current_task].stack->r0 = -1;
 			break;
-		case 0x9: /* sleep */
+		case sysc_sleep: /* sleep */
 			if (tasks[current_task].stack->r0 != 0) {
 				tasks[current_task].stack->r0 += tick_count;
 				tasks[current_task].status = TASK_WAIT_TIME;
