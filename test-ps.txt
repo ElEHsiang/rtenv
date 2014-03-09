@@ -1,1 +1,6 @@
+unittest/test-ps.in:4: Error in sourced command file:
+No symbol table is loaded.  Use the "file" command.
+unittest/test-ps.in:4: Error in sourced command file:
+No symbol table is loaded.  Use the "file" command.
+test
 test

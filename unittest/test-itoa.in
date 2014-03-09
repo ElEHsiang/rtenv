@@ -1,0 +1,18 @@
+file main.elf
+target remote :3333
+set logging file test-itoa.txt
+set logging on
+set itoa(0, cmd[0])
+if !strcmp(cmd[0], "0")
+    echo Pass: itoa correctly converts 0into "0"\n
+else
+    printf "Fail: itoa converts 0 into \"%s\", shall be \" 0\"\n", cmd[0]
+end
+set itoa(-32768, cmd[0])
+if !strcmp(cmd[0], "-32768")
+    echo Pass: itoa correctly converts -32768 into "-32768"\n
+else
+    printf "Fail: itoa converts -32768 into \"%s\", shall be \"-32768\"\n"
+cmd[0]
+end
+set logging off

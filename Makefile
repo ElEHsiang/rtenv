@@ -89,7 +89,18 @@ qemuauto_remote: main.bin gdbscript
 	$(CROSS_COMPILE)gdb -x gdbscript&
 	sleep 5
 
-qemu_autotest: main.bin test-ps.in
+qemu_autotest: unit-test.c unit-test.h
+	$(MAKE) main.bin DEBUG_FLAGS=-DDEBUG
+	$(QEMU_STM32) -nographic -M stm32-p103 \
+		-gdb tcp::3333 -S \
+		-serial stdio \
+		-kernel main.bin -monitor null >/dev/null &
+	$(CROSS_COMPILE)gdb -batch -x unittest/test-itoa.in
+	pkill -9 $(notdir $(QEMU_STM32))
+
+
+
+qemu_autotest_bk: main.bin test-ps.in
 	$(QEMU_STM32) -M stm32-p103 \
 	-gdb tcp::3333 -S \
 	-kernel main.bin & 
