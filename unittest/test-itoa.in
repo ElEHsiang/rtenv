@@ -1,4 +1,4 @@
-file main.elf
+file ../main.elf
 target remote :3333
 set logging file test-itoa.txt
 set logging on
