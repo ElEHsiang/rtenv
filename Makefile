@@ -97,8 +97,8 @@ qemu_autotest: unit-test.c unit-test.h
 		-kernel main.bin -monitor null >/dev/null &
 	$(CROSS_COMPILE)gdb -batch -x unittest/test-strlen.in &
 	$(CROSS_COMPILE)gdb -batch -x unittest/test-itoa.in 
-	mv test-strlen.txt unittest
-	mv test-itoa.txt unittest
+	mv -f test-strlen.txt unittest
+	mv -f  test-itoa.txt unittest
 	pkill -9 $(notdir $(QEMU_STM32))
 
 
