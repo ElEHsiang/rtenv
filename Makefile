@@ -95,19 +95,12 @@ qemu_autotest: unit-test.c unit-test.h
 		-gdb tcp::3333 -S \
 		-serial stdio \
 		-kernel main.bin -monitor null >/dev/null &
-	$(CROSS_COMPILE)gdb -batch -x unittest/test-strlen.in
+	$(CROSS_COMPILE)gdb -batch -x unittest/test-strlen.in &
+	$(CROSS_COMPILE)gdb -batch -x unittest/test-itoa.in 
 	mv test-strlen.txt unittest
+	mv test-itoa.txt unittest
 	pkill -9 $(notdir $(QEMU_STM32))
 
-
-
-qemu_autotest_bk: main.bin test-ps.in
-	$(QEMU_STM32) -M stm32-p103 \
-	-gdb tcp::3333 -S \
-	-kernel main.bin & 
-	$(CROSS_COMPILE)gdb -batch -x test-ps.in
-	sleep 5
-	pkill -9 $(notdir $(QEMU_STM32))
 
 clean:
 	rm -f *.elf *.bin *.list
