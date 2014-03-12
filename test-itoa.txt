@@ -1,4 +1,0 @@
-unittest/test-itoa.in:4: Error in sourced command file:
-No symbol table is loaded.  Use the "file" command.
-unittest/test-itoa.in:5: Error in sourced command file:
-Too few arguments in function call.
