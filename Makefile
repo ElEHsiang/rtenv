@@ -95,7 +95,7 @@ qemu_autotest: unit-test.c unit-test.h
 		-gdb tcp::3333 -S \
 		-serial stdio \
 		-kernel main.bin -monitor null >/dev/null &
-	$(CROSS_COMPILE)gdb -batch -x test-strlen.in
+	$(CROSS_COMPILE)gdb -batch -x unittest/test-strlen.in
 	pkill -9 $(notdir $(QEMU_STM32))
 
 
