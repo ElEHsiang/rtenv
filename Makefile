@@ -105,6 +105,8 @@ qemu_autotest: unit-test.c unit-test.h
 	mv -f  test-strcmp.txt unittest
 	$(CROSS_COMPILE)gdb -batch -x unittest/test-strncmp.in 
 	mv -f  test-strncmp.txt unittest
+	$(CROSS_COMPILE)gdb -batch -x unittest/test-cmdtok.in 
+	mv -f  test-cmdtok.txt unittest
 	pkill -9 $(notdir $(QEMU_STM32))
 
 
